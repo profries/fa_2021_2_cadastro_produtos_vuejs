@@ -1,9 +1,19 @@
 const app = new Vue({
     el: "main",
     data: {
+        novoProduto: {},
         listaProdutos: [],
     },
     methods: {
+        inserirProduto: function() {
+            axios
+                .post('http://localhost:3000/api/produtos', this.novoProduto)
+                .then(response => {
+                    this.refresh();
+                    this.novoProduto = {};
+                });
+        },    
+
         refresh: function () {
             axios
                 .get('http://localhost:3000/api/produtos')
