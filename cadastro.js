@@ -6,21 +6,17 @@ const app = new Vue({
     },
     methods: {
         inserirProduto: function() {
-            axios
-                .post('http://localhost:3000/api/produtos', this.novoProduto)
-                .then(response => {
-                    this.refresh();
-                    this.novoProduto = {};
-                });
+            APIinserirProduto(this.novoProduto, (produto) => {
+                console.log(produto);
+                this.refresh();
+                this.novoProduto = {};
+            });
         },    
 
         refresh: function () {
-            axios
-                .get('http://localhost:3000/api/produtos')
-                .then(response => {
-                    this.listaProdutos = response.data;
-                    console.log("Response: ",response);
-                })
+            APIlistarProdutos((data) => {
+                this.listaProdutos = data
+            });
         }
     },
     created: function() {
